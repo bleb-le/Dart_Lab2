@@ -1,9 +1,15 @@
 import 'dart:io';
 import 'package:lab2_todo/todo.dart';
+import 'package:ansicolor/ansicolor.dart';
+
+final AnsiPen greenPen = AnsiPen()..green();
+final AnsiPen redPen = AnsiPen()..red();
+final AnsiPen bluePen = AnsiPen()..blue();
+final AnsiPen yellowPen = AnsiPen()..yellow();
 
 void printMenu() {
   print('');
-  print('ToDo список');
+  print(yellowPen('ToDo список'));
   print('add - добавить задачу');
   print('list - показать все задачи');
   print('done - отметить выполненной');
@@ -15,16 +21,16 @@ void addTodo(List<Todo> todos) {
   stdout.write('Название задачи: ');
   String? input = stdin.readLineSync();
   if (input == null || input.trim().isEmpty) {
-    print('Ошибка: название не может быть пустым');
+    print(redPen('Ошибка: название не может быть пустым'));
     return;
   }
   todos.add(Todo(title: input.trim()));
-  print('Задача добавлена!');
+  print(greenPen('Задача добавлена!'));
 }
 
 void listTodos(List<Todo> todos) {
   if (todos.isEmpty) {
-    print('Список задач пуст');
+    print(redPen('Список задач пуст'));
     return;
   }
   print('');
@@ -45,7 +51,7 @@ void completeTodo(List<Todo> todos) {
   for (var todo in todos) {
     if (todo.id == id) {
       todo.complete();
-      print('Задача отмечена выполненной!');
+      print(bluePen('Задача отмечена выполненной!'));
       return;
     }
   }
@@ -64,7 +70,7 @@ void deleteTodo(List<Todo> todos) {
   for (int i = 0; i < todos.length; i++) {
     if (todos[i].id == id) {
       todos.removeAt(i);
-      print('Задача удалена!');
+      print(greenPen('Задача удалена!'));
       return;
     }
   }
